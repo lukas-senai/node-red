@@ -1,0 +1,430 @@
+[
+    {
+        "id": "smart_home_tab",
+        "type": "tab",
+        "label": "Casa Inteligente",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "mqtt_broker_home",
+        "type": "mqtt-broker",
+        "name": "Broker MQTT",
+        "broker": "host.docker.internal",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true
+    },
+    {
+        "id": "ui_tab_home",
+        "type": "ui_tab",
+        "name": "Smart Home",
+        "icon": "home",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "group_sala",
+        "type": "ui_group",
+        "name": "Sala",
+        "tab": "ui_tab_home",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "group_quarto",
+        "type": "ui_group",
+        "name": "Quarto",
+        "tab": "ui_tab_home",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "group_seguranca",
+        "type": "ui_group",
+        "name": "Segurança",
+        "tab": "ui_tab_home",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "switch_luz_sala",
+        "type": "ui_switch",
+        "z": "smart_home_tab",
+        "name": "",
+        "label": "Luz da Sala",
+        "group": "group_sala",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "animate": false,
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "mqtt_luz_sala"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_luz_sala",
+        "type": "mqtt out",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/sala/luz",
+        "qos": "",
+        "retain": "",
+        "broker": "mqtt_broker_home",
+        "x": 430,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "switch_tv",
+        "type": "ui_switch",
+        "z": "smart_home_tab",
+        "name": "",
+        "label": "TV",
+        "group": "group_sala",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "mqtt_tv"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_tv",
+        "type": "mqtt out",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/sala/tv",
+        "broker": "mqtt_broker_home",
+        "x": 420,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "gauge_temp",
+        "type": "ui_gauge",
+        "z": "smart_home_tab",
+        "name": "",
+        "group": "group_quarto",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 450,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "mqtt_temp_in",
+        "type": "mqtt in",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/quarto/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "mqtt_broker_home",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "gauge_temp",
+                "temp_alert"
+            ]
+        ]
+    },
+    {
+        "id": "temp_alert",
+        "type": "switch",
+        "z": "smart_home_tab",
+        "name": "Temp > 30",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "toast_temp"
+            ]
+        ]
+    },
+    {
+        "id": "toast_temp",
+        "type": "ui_toast",
+        "z": "smart_home_tab",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 690,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "switch_ar",
+        "type": "ui_switch",
+        "z": "smart_home_tab",
+        "name": "",
+        "label": "Ar Condicionado",
+        "group": "group_quarto",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "mqtt_ar"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_ar",
+        "type": "mqtt out",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/quarto/ar",
+        "broker": "mqtt_broker_home",
+        "x": 460,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "mqtt_porta_in",
+        "type": "mqtt in",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/porta/status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "mqtt_broker_home",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "text_porta"
+            ]
+        ]
+    },
+    {
+        "id": "text_porta",
+        "type": "ui_text",
+        "z": "smart_home_tab",
+        "group": "group_seguranca",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Porta Principal:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 450,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "switch_alarme",
+        "type": "ui_switch",
+        "z": "smart_home_tab",
+        "name": "",
+        "label": "Alarme",
+        "group": "group_seguranca",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "onvalue": "ARMADO",
+        "onvalueType": "str",
+        "offvalue": "DESARMADO",
+        "offvalueType": "str",
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [
+                "mqtt_alarme"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_alarme",
+        "type": "mqtt out",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/alarme",
+        "broker": "mqtt_broker_home",
+        "x": 430,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "inject_temp",
+        "type": "inject",
+        "z": "smart_home_tab",
+        "name": "Simular Temperatura",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "once": false,
+        "payload": "28",
+        "payloadType": "num",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "mqtt_temp_out"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_temp_out",
+        "type": "mqtt out",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/quarto/temperatura",
+        "broker": "mqtt_broker_home",
+        "x": 450,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "inject_porta",
+        "type": "inject",
+        "z": "smart_home_tab",
+        "name": "Porta Aberta",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "once": false,
+        "payload": "ABERTA",
+        "payloadType": "str",
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "mqtt_porta_out"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_porta_out",
+        "type": "mqtt out",
+        "z": "smart_home_tab",
+        "name": "",
+        "topic": "casa/porta/status",
+        "broker": "mqtt_broker_home",
+        "x": 430,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "inject_alerta",
+        "type": "inject",
+        "z": "smart_home_tab",
+        "name": "Mensagem",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "once": false,
+        "payload": "Bem-vindo ao sistema Smart Home!",
+        "payloadType": "str",
+        "x": 150,
+        "y": 800,
+        "wires": [
+            [
+                "toast_msg"
+            ]
+        ]
+    },
+    {
+        "id": "toast_msg",
+        "type": "ui_toast",
+        "z": "smart_home_tab",
+        "position": "bottom right",
+        "displayTime": "4",
+        "highlight": "green",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 430,
+        "y": 800,
+        "wires": []
+    }
+]
