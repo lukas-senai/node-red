@@ -1,0 +1,71 @@
+[
+    {
+        "id": "chart_temp",
+        "type": "ui_chart",
+        "z": "estufa_tab",
+        "name": "",
+        "group": "grupo_historico",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "label": "Temperatura",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": "",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 410,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "grupo_historico",
+        "type": "ui_group",
+        "name": "Histórico",
+        "tab": "ui_tab_estufa",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui_tab_estufa",
+        "type": "ui_tab",
+        "name": "Estufa",
+        "icon": "leaf",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "364cf32164909e83",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
