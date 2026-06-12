@@ -1,0 +1,530 @@
+[
+    {
+        "id": "406a11ca76c9ba8e",
+        "type": "tab",
+        "label": "Monitoramento de Energia",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2535c8eed34ec71c",
+        "type": "mqtt in",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "topic": "casa/energia/potencia",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "65311044dfe1376a",
+        "inputs": 0,
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "e51b9e29f537ca9b",
+                "8616e0e585c3a733",
+                "91ae34cd4c087868"
+            ]
+        ]
+    },
+    {
+        "id": "e51b9e29f537ca9b",
+        "type": "ui_gauge",
+        "z": "406a11ca76c9ba8e",
+        "group": "a65b9db254cc3d50",
+        "order": 1,
+        "gtype": "gage",
+        "title": "Potência",
+        "label": "W",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "7000",
+        "x": 470,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8616e0e585c3a733",
+        "type": "ui_chart",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "group": "c70cce24e15cb873",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "label": "Histórico de Potência",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": "",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 490,
+        "y": 130,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "91ae34cd4c087868",
+        "type": "switch",
+        "z": "406a11ca76c9ba8e",
+        "name": "Potência > 5000",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "5000",
+                "vt": "num"
+            }
+        ],
+        "outputs": 1,
+        "x": 500,
+        "y": 190,
+        "wires": [
+            [
+                "f2b8fc2692368184"
+            ]
+        ]
+    },
+    {
+        "id": "f2b8fc2692368184",
+        "type": "ui_toast",
+        "z": "406a11ca76c9ba8e",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "name": "",
+        "x": 760,
+        "y": 190,
+        "wires": []
+    },
+    {
+        "id": "0d7216044aa0e967",
+        "type": "mqtt in",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "topic": "casa/energia/tensao",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "65311044dfe1376a",
+        "inputs": 0,
+        "x": 180,
+        "y": 280,
+        "wires": [
+            [
+                "30ebc45b33d9ee8b"
+            ]
+        ]
+    },
+    {
+        "id": "30ebc45b33d9ee8b",
+        "type": "ui_gauge",
+        "z": "406a11ca76c9ba8e",
+        "group": "a65b9db254cc3d50",
+        "order": 2,
+        "gtype": "gage",
+        "title": "Tensão",
+        "label": "V",
+        "format": "{{value}}",
+        "min": 180,
+        "max": "260",
+        "x": 460,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "92872d94c0b3552a",
+        "type": "mqtt in",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "topic": "casa/energia/consumo",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "65311044dfe1376a",
+        "inputs": 0,
+        "x": 180,
+        "y": 360,
+        "wires": [
+            [
+                "689da9aecc8962ed"
+            ]
+        ]
+    },
+    {
+        "id": "689da9aecc8962ed",
+        "type": "ui_text",
+        "z": "406a11ca76c9ba8e",
+        "group": "c70cce24e15cb873",
+        "order": 2,
+        "label": "Consumo Total",
+        "format": "{{msg.payload}} kWh",
+        "layout": "row-spread",
+        "x": 470,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ececcee36578a1b2",
+        "type": "ui_switch",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "label": "Chuveiro",
+        "group": "grupo_controle",
+        "order": 1,
+        "passthru": true,
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "x": 180,
+        "y": 480,
+        "wires": [
+            [
+                "6218717fc9d65390"
+            ]
+        ]
+    },
+    {
+        "id": "6218717fc9d65390",
+        "type": "mqtt out",
+        "z": "406a11ca76c9ba8e",
+        "topic": "casa/equipamentos/chuveiro",
+        "broker": "65311044dfe1376a",
+        "x": 450,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "52afa9f98c01fc84",
+        "type": "ui_switch",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "label": "Ar Condicionado",
+        "group": "grupo_controle",
+        "order": 2,
+        "passthru": true,
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "x": 210,
+        "y": 540,
+        "wires": [
+            [
+                "a86eb196bc69bdb0"
+            ]
+        ]
+    },
+    {
+        "id": "a86eb196bc69bdb0",
+        "type": "mqtt out",
+        "z": "406a11ca76c9ba8e",
+        "topic": "casa/equipamentos/ar",
+        "broker": "65311044dfe1376a",
+        "x": 450,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9df21d0f1e769db7",
+        "type": "ui_switch",
+        "z": "406a11ca76c9ba8e",
+        "name": "",
+        "label": "Máquina de Lavar",
+        "group": "grupo_controle",
+        "order": 3,
+        "passthru": true,
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "x": 220,
+        "y": 600,
+        "wires": [
+            [
+                "f2a95f0e010fe986"
+            ]
+        ]
+    },
+    {
+        "id": "f2a95f0e010fe986",
+        "type": "mqtt out",
+        "z": "406a11ca76c9ba8e",
+        "topic": "casa/equipamentos/lavadora",
+        "broker": "65311044dfe1376a",
+        "x": 470,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "b2c00e66484e46b9",
+        "type": "inject",
+        "z": "406a11ca76c9ba8e",
+        "name": "1000 W",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "1000",
+        "payloadType": "num",
+        "x": 160,
+        "y": 740,
+        "wires": [
+            [
+                "2a492688b57a6209"
+            ]
+        ]
+    },
+    {
+        "id": "86aeaaefef05305b",
+        "type": "inject",
+        "z": "406a11ca76c9ba8e",
+        "name": "2500 W",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "2500",
+        "payloadType": "num",
+        "x": 160,
+        "y": 790,
+        "wires": [
+            [
+                "2a492688b57a6209"
+            ]
+        ]
+    },
+    {
+        "id": "1a48aee6fcafdd98",
+        "type": "inject",
+        "z": "406a11ca76c9ba8e",
+        "name": "4500 W",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "4500",
+        "payloadType": "num",
+        "x": 160,
+        "y": 840,
+        "wires": [
+            [
+                "2a492688b57a6209"
+            ]
+        ]
+    },
+    {
+        "id": "fd53af3c20082e64",
+        "type": "inject",
+        "z": "406a11ca76c9ba8e",
+        "name": "6000 W",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "6000",
+        "payloadType": "num",
+        "x": 160,
+        "y": 890,
+        "wires": [
+            [
+                "2a492688b57a6209"
+            ]
+        ]
+    },
+    {
+        "id": "2a492688b57a6209",
+        "type": "mqtt out",
+        "z": "406a11ca76c9ba8e",
+        "topic": "casa/energia/potencia",
+        "broker": "65311044dfe1376a",
+        "x": 430,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "ec25148df69d3d4e",
+        "type": "inject",
+        "z": "406a11ca76c9ba8e",
+        "name": "220 V",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "220",
+        "payloadType": "num",
+        "x": 160,
+        "y": 950,
+        "wires": [
+            [
+                "2865c235ed699282"
+            ]
+        ]
+    },
+    {
+        "id": "2865c235ed699282",
+        "type": "mqtt out",
+        "z": "406a11ca76c9ba8e",
+        "topic": "casa/energia/tensao",
+        "broker": "65311044dfe1376a",
+        "x": 430,
+        "y": 950,
+        "wires": []
+    },
+    {
+        "id": "6fa878c59f2613bd",
+        "type": "inject",
+        "z": "406a11ca76c9ba8e",
+        "name": "125 kWh",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "125",
+        "payloadType": "num",
+        "x": 160,
+        "y": 1010,
+        "wires": [
+            [
+                "eb32400aaa631fcf"
+            ]
+        ]
+    },
+    {
+        "id": "eb32400aaa631fcf",
+        "type": "mqtt out",
+        "z": "406a11ca76c9ba8e",
+        "topic": "casa/energia/consumo",
+        "broker": "65311044dfe1376a",
+        "x": 440,
+        "y": 1010,
+        "wires": []
+    },
+    {
+        "id": "65311044dfe1376a",
+        "type": "mqtt-broker",
+        "name": "Broker MQTT",
+        "broker": "host.docker.internal",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "a65b9db254cc3d50",
+        "type": "ui_group",
+        "name": "Monitoramento",
+        "tab": "162883b7d9f04a1d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c70cce24e15cb873",
+        "type": "ui_group",
+        "name": "Consumo",
+        "tab": "162883b7d9f04a1d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "grupo_controle",
+        "type": "ui_group",
+        "name": "Controle",
+        "tab": "ui_tab_estufa",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "162883b7d9f04a1d",
+        "type": "ui_tab",
+        "name": "Energia",
+        "icon": "flash_on",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui_tab_estufa",
+        "type": "ui_tab",
+        "name": "Estufa",
+        "icon": "leaf",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cc59433b8239fa45",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
